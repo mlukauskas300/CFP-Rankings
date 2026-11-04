@@ -1,31 +1,10 @@
-name: Update CFP Rankings CSV
-
-on:
-  schedule:
-    # Runs every Tuesday at 11:00 PM UTC (~7:00 PM EST, right after CFP rankings drop)
-    - cron: '0 23 * * 2'
-  workflow_dispatch: # Allows manual trigger anytime from the GitHub UI
-
-jobs:
-  scrape-and-commit:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout Repository
+- name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set Up Python
-        uses: actions/python-version@v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
       - name: Run Scraper Script
         run: python scrape.py
-
-      - name: Commit and Push Updated CSV
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add rankings.csv
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update CFP rankings" && git push)
