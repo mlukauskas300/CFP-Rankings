@@ -30,7 +30,7 @@ def update_cfp_rankings():
                 rank = item.get('current', '')
                 team_info = item.get('team', {})
                 team_name = team_info.get('nickname') or team_info.get('location', 'N/A')
-                record = item.get('recordSummary', 'N/A')
+                record = f"'{item.get('recordSummary', 'N/A')}"
                 prev_rank = item.get('previous', 'N/A')
                 points = item.get('points', 0)
                 
